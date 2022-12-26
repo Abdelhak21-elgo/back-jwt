@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:latest
+    networks:
+      - jwtbd-network
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=jwt-learn
+      - MYSQL_PASSWORD=root
+    volumes:
+      - mysqldb:/var/lib/mysql
+    restart: always
+    ports:
+      - 3307:3306
+  learnjwt:
+    container_name: learnjwt
+    image: learnjwt
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - jwtbd-network
+    depends_on:
+      - mysqldb
+    environment:
+      - MYSQL_HOST=mysqldb
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=jwt-learn
+      - MYSQL_PORT=3306
+    restart: always   
+
+networks:
+  jwtbd-network:
+    name: jwtbd-network
+volumes:
+  mysqldb:
