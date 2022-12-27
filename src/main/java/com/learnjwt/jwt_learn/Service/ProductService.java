@@ -23,6 +23,10 @@ public class ProductService {
         return (List<Product>)productDao.findAll();
     }
 
+    public Product getProductDetailsByid(Long productId){
+        return productDao.findById(productId).get();
+    }
+
     public void deletproductDetails(Long productId){
         productDao.deleteById(productId);
     }

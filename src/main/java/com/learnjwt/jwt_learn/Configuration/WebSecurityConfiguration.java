@@ -36,12 +36,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable().authorizeRequests()
-                .antMatchers("/authenticate", "/regestNewUser","/getAllproducts","/deletProducrDetails/{productId}",
+                .antMatchers("/authenticate", "/regestNewUser",
                         "/v2/api-docs/**",
                         "/v3/api-docs/**",
                         "/swagger-resources/**",
