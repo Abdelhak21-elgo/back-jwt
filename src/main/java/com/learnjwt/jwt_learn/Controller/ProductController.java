@@ -61,7 +61,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @PreAuthorize("hasRole('Admin')")
+    
     @GetMapping({"/getProductdetailsById/{productId}"})
     public Product getProductdetailsById(@PathVariable("productId")Long productId){
         return productService.getProductDetailsByid(productId);
