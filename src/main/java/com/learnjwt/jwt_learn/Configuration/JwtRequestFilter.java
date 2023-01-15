@@ -23,6 +23,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
 
+    public static String CURENT_USER = "";
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -43,6 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 
             try {
                 userName = jwtUtil.getUserNameFromToken(jwtToken);
+                CURENT_USER= userName;
             } catch (IllegalArgumentException e) {
                 System.out.println("Unabel to get JWT token");
             } catch (ExpiredJwtException e){

@@ -1,5 +1,6 @@
 package com.learnjwt.jwt_learn.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,18 @@ public class ProductService {
 
     public void deletproductDetails(Long productId){
         productDao.deleteById(productId);
+    }
+
+    public List<Product> getProductdetails(boolean isSingleProductCheckout, Long productId){
+        if(isSingleProductCheckout){
+            // we are bying singl product 
+            List<Product> list = new ArrayList<>();
+            Product product = productDao.findById(productId).get();
+            list.add(product);
+            return list;
+        }else{
+            // we are cheking the entire cart
+        }
+        return new ArrayList<>();
     }
 }
