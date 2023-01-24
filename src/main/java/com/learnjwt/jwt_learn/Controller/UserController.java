@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.learnjwt.jwt_learn.Dao.UserDao;
 import com.learnjwt.jwt_learn.Entity.User;
 import com.learnjwt.jwt_learn.Service.UserService;
 
@@ -13,6 +14,9 @@ import com.learnjwt.jwt_learn.Service.UserService;
 public class UserController {
     @Autowired
     private UserService userservice;
+
+    @Autowired
+    private UserDao userDao;
 
     @PostConstruct
     public void initRolesAndUsers(){
@@ -22,6 +26,18 @@ public class UserController {
     @PostMapping({"/regestNewUser"})
     public User regestNewUser(@RequestBody User user){
         return userservice.registerNewUser(user);
+    }
+    // verifail email
+    @GetMapping({"/verify"})
+    public String verifyAccount(@RequestParam String token) {
+        User user = userDao.findByVerificationToken(token);
+        if (user != null) {
+            user.setEnable(true);
+            userDao.save(user);
+            return "Account verified successfully";
+        } else {
+            return "Invalid verification token";
+        }
     }
 
     @GetMapping({"/forAdmin"})

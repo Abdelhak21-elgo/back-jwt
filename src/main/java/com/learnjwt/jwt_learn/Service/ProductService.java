@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.learnjwt.jwt_learn.Dao.ProductDao;
@@ -20,7 +22,12 @@ public class ProductService {
         return productDao.save(product);
     }
 
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts(int pageNumber){
+        Pageable pageable = PageRequest.of(pageNumber,5);
+        return (List<Product>)productDao.findAll(pageable);
+    }
+
+    public List<Product> getAllProduct(){
         return (List<Product>)productDao.findAll();
     }
 

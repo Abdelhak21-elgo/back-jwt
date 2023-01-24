@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.Data;
 
 @Entity
@@ -14,6 +16,10 @@ public class User {
     private String usrFirstName;
     private String userLastName;
     private String userPassword;
+    private String userEmail ;
+    private String verificationToken;
+    // @Value("true")
+    private boolean enable ;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE", 
         joinColumns = {
@@ -24,4 +30,8 @@ public class User {
         }    
     )
     private Set<Role> role;
+
+    public boolean getEnabled() {
+        return false;
+    }
 }
